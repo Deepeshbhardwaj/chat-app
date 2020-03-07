@@ -1,6 +1,7 @@
 const path = require('path');
 const http = require('http');
 const express = require('express');
+const app = express();
 const socketio = require('socket.io')
 const Filter = require('bad-words')
 const {generateMessage,generateLocationMessage}= require('./utils/messages')
@@ -8,11 +9,17 @@ const {addUser, removeUser, getUser, getUsersInRoom} = require('./utils/users')
 const publicDirectoryPath = path.join(__dirname,'../public');
 app.use(express.static(publicDirectoryPath));
 const port = process.env.PORT || 3000
-const app = express();
-
 const server = http.createServer(app)
 const io = socketio(server)
 
+server.listen(port,function(err){
+    if (err){
+        console.log("Error!")
+    }
+    else{
+        console.log("Server is up and running on port :" + port);
+    }
+})
 // let connect = "Welcome"
 
 io.on('connection',(socket) => {
@@ -67,14 +74,7 @@ io.on('connection',(socket) => {
         
     });
 
-    server.listen(port,function(err){
-        if (err){
-            console.log("Error!")
-        }
-        else{
-            console.log("Server is up and running on port :" + port);
-        }
-    })
+
 
     // socket.emit('countUpdated',count)
 
