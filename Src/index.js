@@ -7,10 +7,11 @@ const Filter = require('bad-words')
 const {generateMessage,generateLocationMessage}= require('./utils/messages')
 const {addUser, removeUser, getUser, getUsersInRoom} = require('./utils/users')
 const publicDirectoryPath = path.join(__dirname,'../public');
-app.use(express.static(publicDirectoryPath));
-const port = process.env.PORT || 3000
+
+const port = process.env.port || 3000
 const server = http.createServer(app)
 const io = socketio(server)
+app.use(express.static(publicDirectoryPath));
 
 server.listen(port,function(err){
     if (err){
